@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class VoteEntity {
     @Id
     String id;
-    Boolean vote;
-    Long associateId;
+    String vote;
+    String associateId;
     SessionEntity session;
 }

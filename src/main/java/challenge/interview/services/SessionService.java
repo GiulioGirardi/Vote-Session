@@ -5,6 +5,7 @@ import challenge.interview.entities.SubjectEntity;
 import challenge.interview.exceptions.SessionTimeException;
 import challenge.interview.exceptions.SubjectNotFoundException;
 import challenge.interview.repositories.SessionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class SessionService {
 
     private static final Long TIME_DEFAULT = 1L;
 
+    @Autowired
     SessionRepository sessionRepository;
 
     public Optional<SessionEntity> save(SessionEntity session) {

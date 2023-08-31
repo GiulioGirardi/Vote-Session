@@ -4,6 +4,7 @@ import challenge.interview.dtos.VoteDTO;
 import challenge.interview.entities.SessionEntity;
 import challenge.interview.entities.VoteEntity;
 import challenge.interview.repositories.VoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class VoteService {
+    private static final String VOTE_YES = "SIM";
 
+    @Autowired
     VoteRepository voteRepository;
+
 
     public Optional<VoteEntity> save(VoteEntity vote) {
         return Optional.ofNullable(voteRepository.save(vote));
@@ -31,7 +35,7 @@ public class VoteService {
         Long totalVotesNo = 0L;
 
         for (VoteEntity vote : selectedVotes) {
-            if (vote.getVote().equals(true)) {
+            if (vote.getVote().equals(VOTE_YES)) {
                 totalVotesYes++;
 
             } else {
@@ -56,9 +60,9 @@ public class VoteService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<VoteEntity> voteSession(Boolean associateVote, Long associateId, SessionEntity sessionEntity) {
+    public ResponseEntity<VoteEntity> voteSession(String associateVote, String associateId, SessionEntity sessionEntity) {
         VoteEntity voteEntity = VoteEntity.builder()
-                .vote(associateVote)
+                .vote(associateVoteHandler(associateVote))
                 .associateId(associateId)
                 .session(sessionEntity)
                 .build();
@@ -72,12 +76,17 @@ public class VoteService {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    public Boolean validateAssociateAlreadyVote(SessionEntity optionalSessionEntity, Long associateId) {
-        List<VoteEntity> listVoteEntity = findAll();
+    private String associateVoteHandler(String associateVote) {
+        return associateVote.toUpperCase();
+    }
+
+    public Boolean validateAssociateAlreadyVote(SessionEntity sessionEntity, String associateId) {
+        List<VoteEntity> listVoteEntity = voteRepository.findAllBySession(sessionEntity);
 
         return listVoteEntity
                 .stream()
-                .filter(e -> e.getSession().equals(optionalSessionEntity))
-                .anyMatch(voteEntity -> voteEntity.getAssociateId().equals(associateId));
+                .anyMatch(entity ->
+                        entity.getAssociateId().equals(associateId)
+                );
     }
 }
