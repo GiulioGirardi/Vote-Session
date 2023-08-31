@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "55ec9dda-76e7-4d07-a3b6-92de0d35c22d",
+		"name": "Desafio Sicredi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11997841"
+	},
+	"item": [
+		{
+			"name": "Cadastra pauta",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Teste Cadastro\",\r\n    \"title\": \"Cadastro pauta 2\",\r\n    \"description\": \"realizando teste\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vote-session/v1/subject",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vote-session",
+						"v1",
+						"subject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cria sessão",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vote-session/v1/session/subject/64ef5018dcb7186722d48a0d/time/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vote-session",
+						"v1",
+						"session",
+						"subject",
+						"64ef5018dcb7186722d48a0d",
+						"time",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vota na sessão",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vote-session/v1/session/{session_id}/subject/associate/{associate_id}/vote/true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vote-session",
+						"v1",
+						"session",
+						"{session_id}",
+						"subject",
+						"associate",
+						"{associate_id}",
+						"vote",
+						"true"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Busca resultado votação",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
