@@ -45,10 +45,10 @@ public class SessionService {
         Optional<SessionEntity> optionalSessionEntity = save(sessionEntity);
 
         if (optionalSessionEntity.isPresent()) {
-            return new ResponseEntity(optionalSessionEntity.get(), HttpStatus.CREATED);
+            return new ResponseEntity<>(optionalSessionEntity.get(), HttpStatus.CREATED);
 
         }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     public void validatePostSessionRequest(Optional<SubjectEntity> optionalSubjectEntity, Long minutesOpened) throws SubjectNotFoundException, SessionTimeException {
